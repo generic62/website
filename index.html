@@ -1,6 +1,6 @@
 <body>
   <h1>:3</h1><br>
-  <img id="random" width="796" height="796" src="">
+  <img id="random" style="height: 796px; width: auto;" src="">
   
   <script>
     fetch('images.json')
@@ -13,7 +13,7 @@
       .then(images => {
         if (images && images.length > 0) {
           const randomIndex = Math.floor(Math.random() * images.length);
-          document.getElementById("randomImage").src = images[randomIndex];
+          document.getElementById("random").src = images[randomIndex];
         } else {
           console.error('No images found in the JSON file.');
         }
