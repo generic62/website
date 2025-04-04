@@ -1,6 +1,15 @@
 <body>
   <h1>:3</h1><br>
-  <img id="random" style="height: 796px; width: auto;" src="">  
+  <img id="random" style="height: 796px; width: auto;" src="">
+  
+  <script>
+    window.onload = function() {
+      var images = ["img.png", "img2.jpg", "img3.png", "img4.png"];
+      var randomIndex = Math.floor(Math.random() * images.length);
+      document.getElementById("random").src = images[randomIndex];
+    };
+  </script>
+  
   <p>TOUCH FLUFFY TAIL. BURY FACE IN FLUFFY TAIL. CUDDLE WITH FLUFFY TAIL. SLEEP IN FLUFFY TAIL.</p>
   <p>image might change in the future. check back later.</p>
   <p>kitsunebiboi@furfag.me</p>
