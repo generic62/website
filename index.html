@@ -1,28 +1,6 @@
 <body>
   <h1>:3</h1><br>
-  <img id="random" style="height: 796px; width: auto;" src="">
-  
-  <script>
-    fetch('images.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(images => {
-        if (images && images.length > 0) {
-          const randomIndex = Math.floor(Math.random() * images.length);
-          document.getElementById("random").src = images[randomIndex];
-        } else {
-          console.error('No images found in the JSON file.');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching the images:', error);
-      });
-  </script>
-  
+  <img id="random" style="height: 796px; width: auto;" src="">  
   <p>TOUCH FLUFFY TAIL. BURY FACE IN FLUFFY TAIL. CUDDLE WITH FLUFFY TAIL. SLEEP IN FLUFFY TAIL.</p>
   <p>image might change in the future. check back later.</p>
   <p>kitsunebiboi@furfag.me</p>
