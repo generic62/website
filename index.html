@@ -7,10 +7,35 @@
     }
   </style>
   <!-- <script>
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
     window.onload = function() {
-      var images = ["img.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png", "img9.png", "img10.png", "img11.png", "img12.png", "img13.png", "img14.png", "img15.gif", "img16.png", "img17.png", "img18.png", "img19.png", "img20.png"];
-      var randomIndex = Math.floor(Math.random() * images.length);
-      document.getElementById("random").src = images[randomIndex];
+      const images = ["img.png", "img2.png", "img3.png", "img4.png", "img5.png", "img6.png", "img7.png", "img8.png", "img9.png", "img10.png", "img11.png", "img12.png", "img13.png", "img14.png", "img15.gif", "img16.png", "img17.png", "img18.png", "img19.png", "img20.png"];
+      let sequence = localStorage.getItem('imageSequence');
+      let index = localStorage.getItem('imageIndex');
+  
+      if (sequence && index !== null) {
+        sequence = JSON.parse(sequence);
+        index = parseInt(index, 10);
+      } else {
+        sequence = shuffle(images.slice());
+        index = 0;
+      }
+      const imageSrc = sequence[index];
+      index++;
+      if (index >= sequence.length) {
+        sequence = shuffle(images.slice());
+        index = 0;
+      }
+
+      localStorage.setItem('imageSequence', JSON.stringify(sequence));
+      localStorage.setItem('imageIndex', index);
+      document.getElementById("random").src = imageSrc;
     };
   </script>
 </head> -->
