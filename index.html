@@ -7,35 +7,67 @@
     }
   </style>
   <script>
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        let j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
     }
-    window.onload = function() {
-      const images = ["img.png", "img2.png", "IMAGE.png", "img4.png", "img5.png", "img6.png", "WHY.png", "img8.png", "img9.png", "img10.png", "img11.png", "img12.png", "ANOTHER.png", "img14.png", "THIRD.gif", "FOUR.png", "img17.png", "FIVE.png", "SIX.png", "SEVEN.png"];
-      let sequence = localStorage.getItem('imageSequence');
-      let index = localStorage.getItem('imageIndex');
-  
-      if (sequence && index !== null) {
-        sequence = JSON.parse(sequence);
-        index = parseInt(index, 10);
-      } else {
-        sequence = shuffle(images.slice());
-        index = 0;
-      }
-      const imageSrc = sequence[index];
-      index++;
-      if (index >= sequence.length) {
-        sequence = shuffle(images.slice());
-        index = 0;
-      }
 
-      localStorage.setItem('imageSequence', JSON.stringify(sequence));
-      localStorage.setItem('imageIndex', index);
-      document.getElementById("random").src = imageSrc;
+    window.onload = function() {
+      const images = ["https://files.catbox.moe/iidto3.png", "https://files.catbox.moe/n1zrzd.png", "https://files.catbox.moe/mzz1dn.png", "https://files.catbox.moe/yk0bu4.png", "https://files.catbox.moe/hk4t2m.png", "https://files.catbox.moe/lts6xa.png", "https://files.catbox.moe/axnu5a.gif", "https://files.catbox.moe/bowu14.png", "https://files.catbox.moe/ur08wj.png", "https://files.catbox.moe/1xim5x.png", "https://files.catbox.moe/sngdx4.png", "https://files.catbox.moe/n12mr8.png", "https://files.catbox.moe/e6ibgv.png", "https://files.catbox.moe/vxey7z.jpg", "https://files.catbox.moe/5ptn37.png", "https://files.catbox.moe/zwdjsf.png", "https://files.catbox.moe/ubfoxl.png", "https://files.catbox.moe/kbc7p0.png", "https://files.catbox.moe/c6kin7.png", "https://files.catbox.moe/a1fot2.png", "https://files.catbox.moe/g3upcc.png", "https://files.catbox.moe/c6erps.png"];
+      
+      let storedOrder = getCookie("shuffleOrder");
+      let currentIndex = getCookie("shuffleIndex");
+      if (!storedOrder) {
+        storedOrder = shuffle(images.slice());
+        currentIndex = 0;
+        setCookie("shuffleOrder", JSON.stringify(storedOrder), 1);
+        setCookie("shuffleIndex", currentIndex, 1);
+      } else {
+        try {
+          storedOrder = JSON.parse(storedOrder);
+        } catch(e) {
+          storedOrder = shuffle(images.slice());
+          currentIndex = 0;
+          setCookie("shuffleOrder", JSON.stringify(storedOrder), 1);
+          setCookie("shuffleIndex", currentIndex, 1);
+        }
+      }
+      currentIndex = parseInt(currentIndex, 10);
+      if (isNaN(currentIndex) || currentIndex < 0 || currentIndex >= images.length) {
+        currentIndex = 0;
+      }
+      const chosenImage = storedOrder[currentIndex];
+      document.getElementById("random").src = chosenImage;
+      currentIndex++;
+      if (currentIndex >= images.length) {
+        storedOrder = shuffle(images.slice());
+        currentIndex = 0;
+        setCookie("shuffleOrder", JSON.stringify(storedOrder), 1);
+      }
+      setCookie("shuffleIndex", currentIndex, 1);
     };
   </script>
 </head>
